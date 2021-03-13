@@ -29,6 +29,10 @@ export class Blog {
         return this.#posts;
     }
 
+    get title() {
+        return this.#title;
+    }
+
     addPost(postItem) {
         if (postItem instanceof Post) {
             this.#posts.push(postItem);
@@ -50,6 +54,3 @@ export class Blog {
         } else throw new Error(`postId "${postId}" is not a number!`)
     }
 }
-
-
-//
