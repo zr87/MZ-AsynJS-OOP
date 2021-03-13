@@ -30,6 +30,9 @@ blog1.deletePost(1);
 console.log("posts:", blog1.posts);
 console.groupEnd();
 
+console.log("static", Blog.API_URL );
+
 console.group("Blog class - getPotsById(postId)");
 console.log("posts:", blog1.getPotsById("w"));
 console.groupEnd();
+

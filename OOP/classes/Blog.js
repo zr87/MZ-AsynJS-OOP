@@ -1,10 +1,11 @@
 import {Post} from "./Post.js";
 
 export class Blog {
-
     #title;
     #author;
     #posts = [];
+
+    static API_URL = "https://jsonplaceholder.typicode.com";
 
     constructor(title, author) {
         this.#title = title;
@@ -14,12 +15,14 @@ export class Blog {
     }
 
     #fetchPosts() {
-        fetch("https://jsonplaceholder.typicode.com/posts")
+        fetch(Blog.API_URL  + "/posts")
             .then(response => response.json())
             .then(data => {
-                this.#posts = data
-                //console.log("data", this.posts);
-            })
+                data.forEach(item => {
+                    this.#posts.push(new Post(item.title, item.body, item.id));
+                })
+                console.log("data", this.posts);
+            });
     }
 
     get posts() {
@@ -46,8 +49,6 @@ export class Blog {
             return this.posts.find(item => item.id === postId) || null;
         } else throw new Error(`postId "${postId}" is not a number!`)
     }
-
-
 }
 
 
