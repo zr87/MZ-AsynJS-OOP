@@ -14,4 +14,7 @@ api forrás: https://jsonplaceholder.typicode.com/users
 ## 2. OOP feladat  
 Feladat leírás: [google docs link](https://docs.google.com/document/d/1X5bw45gvOzFK4eSFHOkLbS7FzVPpQo2CK_CmljB_5E0/edit?usp=sharing)     
 
+általános megoldás: `complete` branch
+teljes aszinkron megoldás: `2c` branch (a http kéréssel lekért post elemek is megjelennek a tömbben)
+
     
