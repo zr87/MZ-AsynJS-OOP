@@ -16,23 +16,46 @@ console.log("user full name:", user1.fullname);
 console.groupEnd();
 
 const blog1 = new Blog("My blog" , user1);
-console.group("Blog class");
-console.log("blog1.posts", blog1.posts);
-console.groupEnd();
 
-console.group("Blog class - addPost()");
+/*
+console.group("Blog class - get posts async");
+console.log("blog1.posts");
+blog1.posts.then(data => {
+    console.log("posts", data);
+});
+console.groupEnd();
+*/
+
+/*
+console.group("Blog class - addPost() async ");
 blog1.addPost(post1);
-console.log("posts:", blog1.posts);
+blog1.posts.then(data => {
+    console.log("posts", data);
+});
 console.groupEnd();
+*/
 
-console.group("Blog class - deletePost(id)");
-blog1.deletePost(1);
-console.log("posts:", blog1.posts);
-console.groupEnd();
 
-console.log("static", Blog.API_URL );
+/*console.group("Blog class - deletePost(id)");
+console.log("blog1.deletePost(54);");
+blog1.deletePost(54).then(value => console.log("value:", value));
 
-console.group("Blog class - getPotsById(postId)");
+blog1.posts.then(data => {
+    console.log("posts", data);
+});
+console.groupEnd();*/
+
+
+/*console.log("static", Blog.API_URL );*/
+
+/*
+console.group("Blog class - async  getPotsById(postId)");
+const postId = -1;
+blog1.getPotsById(postId).then(item => {
+    console.log(`post item with id: ${postId}, found item: `,  item);
+})
+
 console.log("posts:", blog1.getPotsById("w"));
 console.groupEnd();
+*/
 

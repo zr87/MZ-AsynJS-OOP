@@ -4,6 +4,7 @@ export class Blog {
     #title;
     #author;
     #posts = [];
+    #postsPromise;
 
     static API_URL = "https://jsonplaceholder.typicode.com";
 
@@ -15,18 +16,30 @@ export class Blog {
     }
 
     #fetchPosts() {
-        fetch(Blog.API_URL  + "/posts")
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    this.#posts.push(new Post(item.title, item.body, item.id));
+        this.#postsPromise = new Promise((resolve, reject) => {
+            fetch(Blog.API_URL + "/posts")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    } else return response.json();
                 })
-                console.log("data", this.posts);
-            });
+                .then(data => {
+                    data.forEach(item => {
+                        this.#posts.push(new Post(item.title, item.body, item.id));
+                    });
+                    resolve();
+                })
+                .catch(error => {
+                    reject();
+                    console.error(error);
+                });
+        });
     }
 
-    get posts() {
-        return this.#posts;
+    get posts() { // Promise-t adunk vissza
+        return this.#postsPromise
+            .then(() => this.#posts)
+            .catch(error => console.error(error));
     }
 
     get title() {
@@ -34,23 +47,35 @@ export class Blog {
     }
 
     addPost(postItem) {
-        if (postItem instanceof Post) {
-            this.#posts.push(postItem);
-        } else throw new Error("postItem is not an instance of Post class!");
+        return this.#postsPromise
+            .then(() => {
+                if (postItem instanceof Post) {
+                    this.#posts.push(postItem);
+                } else throw new Error("postItem is not an instance of Post class!");
+            })
+            .catch(error => console.error(error));
     }
 
     deletePost(postId) {
-        const indexToDelete = this.posts.findIndex(item => item.id === postId)
+        return this.#postsPromise
+            .then(() => {
+                const indexToDelete = this.#posts.findIndex(item => item.id === postId)
 
-        if (indexToDelete) {
-            this.#posts.splice(indexToDelete, 1);
-            return true;
-        } else return false;
+                if (indexToDelete) {
+                    this.#posts.splice(indexToDelete, 1);
+                    return true;
+                } else return false;
+            })
+            .catch(error => console.error(error));
     }
 
     getPotsById(postId) {
-        if (Number.isInteger(postId)) {
-            return this.posts.find(item => item.id === postId) || null;
-        } else throw new Error(`postId "${postId}" is not a number!`)
+        return this.#postsPromise
+            .then(() => {
+                if (Number.isInteger(postId)) {
+                    return this.#posts.find(item => item.id === postId) || null;
+                } else throw new Error(`postId "${postId}" is not a number!`)
+            })
+            .catch(error => console.error(error));
     }
 }
