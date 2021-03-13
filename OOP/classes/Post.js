@@ -12,4 +12,8 @@ export class Post {
     getPreview(length) {
         return this.body.slice(0, length);
     }
+
+    get id() {
+        return this.#id;
+    }
 }
